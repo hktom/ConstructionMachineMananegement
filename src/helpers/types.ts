@@ -1,3 +1,7 @@
+export interface IMachineAttribute {
+  uid: string;
+  value: any;
+}
 export interface IAttribute {
   uid: string;
   name: string;
@@ -15,6 +19,7 @@ export interface IMachine {
   description?: string;
   titleAttribute?: string;
   category: string;
+  attributes: any;
 }
 export interface ICategory {
   uid: string;

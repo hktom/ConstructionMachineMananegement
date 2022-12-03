@@ -10,12 +10,12 @@ interface IProps {
   navigation: any;
 }
 
-function ManageCategory(props: IProps) {
+function AllMachine(props: IProps) {
   const {navigation} = props;
-  const data = useAppSelector((state: RootState) => state.category);
+  const data = useAppSelector((state: RootState) => state.machine);
   useMemo(() => {
     navigation.setOptions({
-      title: 'Manage Category',
+      title: 'Manage Machine',
       headerRight: () => (
         <CButton
           title={'New Machine'}
@@ -48,4 +48,4 @@ function ManageCategory(props: IProps) {
   );
 }
 
-export default ManageCategory;
+export default AllMachine;

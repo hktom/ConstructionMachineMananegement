@@ -20,14 +20,17 @@ function MachineScreen(props: IProps) {
         <CButton
           title={'New Machine'}
           onPress={() =>
-            navigation.navigate('NewMachineScreen', {
-              category: route.params.category,
+            navigation.navigate('EditScreen', {
+              action: 'add',
+              type: 'category',
+              title: 'Manage Category',
+              labelButton: 'Add New Category',
             })
           }
         />
       ),
     });
-  }, [navigation, route.params.category, route.params.title]);
+  }, [navigation, route.params.title]);
   return (
     <ScrollView>
       <View>
@@ -39,8 +42,10 @@ function MachineScreen(props: IProps) {
               title={item.name}
               onPress={() => {
                 navigation.navigate('MachineScreen', {
-                  category: item,
-                  title: `Category : ${item.name}`,
+                  category: route.params.category,
+                  machine: item,
+                  action: 'edit',
+                  title: `Machine : ${item.name}`,
                 });
               }}
             />
