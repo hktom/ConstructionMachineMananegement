@@ -33,18 +33,18 @@ function Dashboard({navigation}: any) {
     </View>
   );
   return (
-    <ScrollView>
-      <View
-        style={{
-          display: 'flex',
-          // alignItems: 'start',
-          justifyContent: 'center',
-          flexDirection: 'column',
-          flex: 1,
-        }}>
-        {data.category.value.length === 0 ? (
-          emptyMachineType()
-        ) : (
+    <View
+      style={{
+        display: 'flex',
+        // alignItems: 'start',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        flex: 1,
+      }}>
+      {data.category.value.length === 0 ? (
+        emptyMachineType()
+      ) : (
+        <ScrollView>
           <View>
             {data.category.value.map((category: any) => (
               <View key={category.uid}>
@@ -91,9 +91,9 @@ function Dashboard({navigation}: any) {
               </View>
             ))}
           </View>
-        )}
-      </View>
-    </ScrollView>
+        </ScrollView>
+      )}
+    </View>
   );
 }
 

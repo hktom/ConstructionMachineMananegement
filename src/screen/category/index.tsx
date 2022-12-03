@@ -19,11 +19,14 @@ function ManageCategory(props: IProps) {
       headerRight: () => (
         <CButton
           title={'Add'}
-          onPress={() =>
-            navigation.navigate('NewMachineScreen', {
+          onPress={() => {
+            navigation.navigate('EditScreen', {
               action: 'add',
-            })
-          }
+              type: 'category',
+              title: 'Manage Category',
+              labelButton: 'Add New Category',
+            });
+          }}
         />
       ),
     });

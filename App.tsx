@@ -12,36 +12,30 @@ import CustomDrawerContent from './src/customDrawerContent';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const HomeScreen = () => {
+const DrawerHomeScreen = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Dashboard" component={Dashboard} />
-      <Stack.Screen name="EditScreen" component={EditCategory} />
-    </Stack.Navigator>
+    <Drawer.Navigator
+      initialRouteName="Dashboard"
+      drawerContent={props => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen name="Dashboard" component={Dashboard} />
+      <Drawer.Screen name="ManageCategory" component={ManageCategory} />
+    </Drawer.Navigator>
   );
 };
 
 function App() {
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator initialRouteName="Dashboard">
-        <Stack.Screen name="Dashboard" component={Dashboard} />
-        <Stack.Screen name="EditScreen" component={EditCategory} />
-      </Stack.Navigator> */}
-
-      <Drawer.Navigator
-      // initialRouteName="Home"
-      // drawerContent={props => <CustomDrawerContent {...props} />}
-      >
-        <Drawer.Screen
-          name="Dashboard"
-          component={HomeScreen}
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          component={DrawerHomeScreen}
           options={{
             headerShown: false,
           }}
         />
-        <Drawer.Screen name="ManageCategory" component={ManageCategory} />
-      </Drawer.Navigator>
+        <Stack.Screen name="EditScreen" component={EditCategory} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
