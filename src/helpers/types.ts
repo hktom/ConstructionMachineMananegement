@@ -4,6 +4,7 @@ export interface IAttribute {
   value: any;
   description?: string;
   type: string;
+  canBeRemoved?: boolean;
   required?: boolean;
   belongTo?: string;
 }

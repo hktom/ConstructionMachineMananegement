@@ -6,7 +6,7 @@ import {useAppSelector} from '../store/store';
 import {RootState} from '../store/rootReducer';
 import CButton from '../component/button';
 
-function Dashboard() {
+function Dashboard({navigation}: any) {
   const data = useAppSelector((state: RootState) => state);
   const emptyMachineType = () => (
     <View
@@ -18,7 +18,17 @@ function Dashboard() {
         flex: 1,
       }}>
       <Text style={{marginBottom: 5}}>No Machine Found</Text>
-      <CButton title={'Add New Machine Type'} onPress={() => console.log('')} />
+      <CButton
+        title={'Add New Machine Type'}
+        onPress={() => {
+          navigation.navigate('EditScreen', {
+            action: 'add',
+            type: 'category',
+            title: 'Manage Category',
+            labelButton: 'Add New Category',
+          });
+        }}
+      />
     </View>
   );
   return (

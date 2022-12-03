@@ -9,7 +9,8 @@ interface IProps {
   value: string;
   required?: boolean;
   variant?: 'outlined' | 'filled' | 'standard';
-  register: any;
+  onChangeText: (inputValue: any) => void;
+  onBlur?: () => void;
 }
 
 function CInput(props: IProps) {
@@ -21,10 +22,7 @@ function CInput(props: IProps) {
   //   } = useForm();
   return (
     <View>
-      <TextInput
-        {...props}
-        {...props.register(props.name, {required: props.required})}
-      />
+      <TextInput {...props} onChangeText={props.onChangeText} />
     </View>
   );
 }
