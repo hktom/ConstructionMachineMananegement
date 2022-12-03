@@ -5,16 +5,14 @@ import {Button, TextInput} from '@react-native-material/core';
 // import Icon from 'react-native-ionicons';
 
 interface IProps {
-  uid?: string;
-  name: string;
-  label: string;
-  value: string;
-  type?: string;
+  item: any;
+  value?: any;
+  canBeRemoved?: boolean;
   showType?: boolean;
   required?: boolean;
   variant?: 'outlined' | 'filled' | 'standard';
   onChangeText: (inputValue: any) => void;
-  onDelete?: (inputValue: any) => void;
+  onDelete: (inputValue: any) => void;
   onBlur?: () => void;
 }
 
@@ -34,7 +32,7 @@ function CInput(props: IProps) {
             variant="contained"
             titleStyle={{fontSize: 7.5}}
             disabled
-            title={props.type}
+            title={props.item?.type}
           />
         </View>
       )}
@@ -42,11 +40,11 @@ function CInput(props: IProps) {
         <TextInput {...props} onChangeText={props.onChangeText} />
       </View>
 
-      {props.onDelete && (
+      {props.canBeRemoved && (
         <View>
           <Button
             variant="text"
-            onPress={() => props.onDelete!(props.uid)}
+            onPress={() => props.onDelete(props.item)}
             title={
               <Image
                 source={require('../asset/trash.png')}

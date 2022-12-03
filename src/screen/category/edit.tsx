@@ -39,7 +39,7 @@ function EditCategory(props: IProps) {
   const data = useAppSelector((state: RootState) => state);
   const [item, setItem] = useState<any>({});
   const [isModalVisible, setModalVisible] = useState(false);
-  const [attributes, setAttributes] = useState<any | IAttribute[]>([]);
+  const [attributes, setAttributes] = useState<any>([]);
 
   const {handleSubmit, control} = useForm();
   const onSubmit = (payload: any) => {
@@ -91,6 +91,10 @@ function EditCategory(props: IProps) {
     ]);
   };
 
+  const removeField = (field: any) => {
+    setAttributes(attributes.filter((i: any) => i.uid !== field.uid));
+  };
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -105,15 +109,14 @@ function EditCategory(props: IProps) {
               control={control}
               render={({field: {onChange, onBlur, value}}) => (
                 <CInput
-                  name={i.uid}
-                  label={i.name}
+                  item={i}
                   value={value}
                   onBlur={onBlur}
                   variant="outlined"
                   showType={true}
-                  type={i.type}
+                  canBeRemoved={i.canBeRemoved}
                   onChangeText={(inputValue: any) => onChange(inputValue)}
-                  onDelete={(inputValue: any) => console.log(inputValue)}
+                  onDelete={(inputValue: any) => removeField(inputValue)}
                 />
               )}
               name="email"
