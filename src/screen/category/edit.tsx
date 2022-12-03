@@ -97,26 +97,28 @@ function EditCategory(props: IProps) {
 
   return (
     <ScrollView>
-      <Box pr={30} pl={30} pt={20}>
+      <Box pr={10} pl={10} pt={20}>
         <View>
           {attributes.map((i: IAttribute) => (
-            <View key={i.uid}>
-              <Controller
-                control={control}
-                render={({field: {onChange, onBlur, value}}) => (
-                  <CInput
-                    name={i.uid}
-                    label={i.name}
-                    value={value}
-                    onBlur={onBlur}
-                    variant="outlined"
-                    onChangeText={(inputValue: any) => onChange(inputValue)}
-                  />
-                )}
-                name="email"
-                rules={{required: true}}
-              />
-            </View>
+            <Controller
+              key={i.uid}
+              control={control}
+              render={({field: {onChange, onBlur, value}}) => (
+                <CInput
+                  name={i.uid}
+                  label={i.name}
+                  value={value}
+                  onBlur={onBlur}
+                  variant="outlined"
+                  showType={true}
+                  type={i.type}
+                  onChangeText={(inputValue: any) => onChange(inputValue)}
+                  onDelete={(inputValue: any) => console.log(inputValue)}
+                />
+              )}
+              name="email"
+              rules={{required: true}}
+            />
           ))}
         </View>
 

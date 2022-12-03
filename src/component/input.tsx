@@ -1,28 +1,61 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View} from 'react-native';
-import {TextInput} from '@react-native-material/core';
-// import {useForm} from 'react-hook-form';
+import {Image, View} from 'react-native';
+import {Button, TextInput} from '@react-native-material/core';
+// import Icon from 'react-native-ionicons';
 
 interface IProps {
+  uid?: string;
   name: string;
   label: string;
   value: string;
+  type?: string;
+  showType?: boolean;
   required?: boolean;
   variant?: 'outlined' | 'filled' | 'standard';
   onChangeText: (inputValue: any) => void;
+  onDelete?: (inputValue: any) => void;
   onBlur?: () => void;
 }
 
 function CInput(props: IProps) {
-  //   const {
-  //     register,
-  //     // handleSubmit,
-  //     // watch,
-  //     // formState: {errors},
-  //   } = useForm();
   return (
-    <View>
-      <TextInput {...props} onChangeText={props.onChangeText} />
+    <View
+      style={{
+        display: 'flex',
+        flexDirection: 'row',
+        // justifyContent: 'space-around',
+        alignItems: 'center',
+        flex: 1,
+      }}>
+      {props.showType && (
+        <View style={{width: 85, marginRight: 10}}>
+          <Button
+            variant="contained"
+            titleStyle={{fontSize: 7.5}}
+            disabled
+            title={props.type}
+          />
+        </View>
+      )}
+      <View style={{flex: 1}}>
+        <TextInput {...props} onChangeText={props.onChangeText} />
+      </View>
+
+      {props.onDelete && (
+        <View>
+          <Button
+            variant="text"
+            onPress={() => props.onDelete!(props.uid)}
+            title={
+              <Image
+                source={require('../asset/trash.png')}
+                style={{width: 30, height: 30}}
+              />
+            }
+          />
+        </View>
+      )}
     </View>
   );
 }
