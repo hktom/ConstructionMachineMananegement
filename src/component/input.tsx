@@ -9,7 +9,7 @@ interface IProps {
   value: string;
   required?: boolean;
   variant?: 'outlined' | 'filled' | 'standard';
-  register: (text: string, options: any) => any;
+  register: any;
 }
 
 function CInput(props: IProps) {

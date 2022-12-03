@@ -1,20 +1,22 @@
 export interface IAttribute {
+  uid: string;
   name: string;
   value: any;
   description?: string;
   type: string;
-  machine?: string;
+  required?: boolean;
+  belongTo?: string;
 }
 
 export interface IMachine {
-  id: string;
+  uid: string;
   name: string;
   description?: string;
   titleAttribute?: string;
   category: string;
 }
 export interface ICategory {
-  id: string;
+  uid: string;
   name: string;
   description?: string;
   titleAttribute: string;
