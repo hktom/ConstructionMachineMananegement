@@ -7,6 +7,7 @@ import {Button, TextInput} from '@react-native-material/core';
 interface IProps {
   item: any;
   value?: any;
+  label?: any;
   canBeRemoved?: boolean;
   showType?: boolean;
   required?: boolean;

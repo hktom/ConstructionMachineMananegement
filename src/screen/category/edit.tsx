@@ -12,7 +12,8 @@ import CInput from '../../component/input';
 // import {Dropdown} from 'react-native-material-dropdown';
 // import RNPickerSelect from 'react-native-picker-select';
 import Modal from 'react-native-modal';
-import {attributeAction} from '../../store/category';
+import {categoryAction} from '../../store/category';
+import {attributeAction} from '../../store/attribute';
 
 interface IProps {
   route: any;
@@ -39,9 +40,10 @@ function EditCategory(props: IProps) {
   const params = route.params;
   const data = useAppSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
-  const [item, setItem] = useState<any>({});
+  // const [item, setItem] = useState<any>({});
   const [isModalVisible, setModalVisible] = useState(false);
   const [attributes, setAttributes] = useState<any>([]);
+  const [category, setCategory] = useState<any>({});
 
   const {handleSubmit, control} = useForm();
   const onSubmit = (payload: any) => {
@@ -54,7 +56,14 @@ function EditCategory(props: IProps) {
         return i;
       });
     }
-    console.log(item);
+
+    dispatch(
+      categoryAction.add({
+        ...category,
+        name: payload[category.uid],
+      }),
+    );
+
     dispatch(attributeAction.add(newItem));
     navigation.goBack();
   };
@@ -62,6 +71,7 @@ function EditCategory(props: IProps) {
   useMemo(() => {
     if (params?.action === 'edit' && params?.uid) {
       let payload = data.category.value.find((i: any) => i.uid === params?.uid);
+      setCategory(payload);
       if (payload) {
         let payloadAttributes: any[] = [];
         data.attribute.value.forEach((i: any) => {
@@ -71,22 +81,32 @@ function EditCategory(props: IProps) {
         });
         setAttributes(payloadAttributes);
       }
-      setItem(payload);
+      setCategory(payload);
     }
   }, [data.attribute.value, data.category.value, params?.action, params?.uid]);
 
   useMemo(() => {
     navigation.setOptions({title: params.title});
     if (params?.action === 'add') {
-      setAttributes([
-        {
-          uid: uuid.v4(),
-          name: 'Name',
-          value: '',
-          type: 'text',
-          required: 'true',
-        },
-      ]);
+      setCategory({
+        uid: uuid.v4(),
+        name: 'Name',
+        value: '',
+        type: 'text',
+        required: 'true',
+      });
+      // setItem({
+      //   uid: uuid.v4(),
+      // });
+      // setAttributes([
+      //   {
+      //     uid: uuid.v4(),
+      //     name: 'Name',
+      //     value: '',
+      //     type: 'text',
+      //     required: 'true',
+      //   },
+      // ]);
     }
   }, [navigation, params?.action, params.title]);
 
@@ -116,6 +136,24 @@ function EditCategory(props: IProps) {
     <ScrollView>
       <Box pr={10} pl={10} pt={20}>
         <View>
+          <Controller
+            control={control}
+            render={({field: {onChange, onBlur, value}}) => (
+              <CInput
+                item={category}
+                label="Name"
+                value={value}
+                onBlur={onBlur}
+                variant="outlined"
+                showType={false}
+                canBeRemoved={false}
+                onChangeText={(inputValue: any) => onChange(inputValue)}
+                onDelete={(inputValue: any) => console.log(inputValue)}
+              />
+            )}
+            name={category?.uid}
+            rules={{required: true}}
+          />
           {attributes.map((i: IAttribute) => (
             <Controller
               key={i.uid}

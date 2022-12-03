@@ -18,7 +18,7 @@ function ManageCategory(props: IProps) {
       title: 'Manage Category',
       headerRight: () => (
         <CButton
-          title={'New Machine'}
+          title={'Add'}
           onPress={() =>
             navigation.navigate('NewMachineScreen', {
               action: 'add',

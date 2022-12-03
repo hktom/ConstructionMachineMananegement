@@ -25,5 +25,5 @@ export interface ICategory {
   uid: string;
   name: string;
   description?: string;
-  titleAttribute: string;
+  titleAttribute?: string;
 }

@@ -52,18 +52,26 @@ function Dashboard({navigation}: any) {
                   style={{
                     display: 'flex',
                     justifyContent: 'space-between',
+                    flexDirection: 'row',
                     flex: 1,
+                    paddingTop: 10,
+                    paddingLeft: 10,
+                    paddingRight: 10,
                   }}>
-                  <Text style={{fontSize: 12}}>{category.name}</Text>
-                  <CButton
-                    title={'Add item'}
-                    onPress={() => {
-                      navigation.navigate('EditMachine', {
-                        category: category,
-                        title: 'Add Machine',
-                      });
-                    }}
-                  />
+                  <View>
+                    <Text style={{fontSize: 20}}>{category.name}</Text>
+                  </View>
+                  <View>
+                    <CButton
+                      title={'Add item'}
+                      onPress={() => {
+                        navigation.navigate('EditMachine', {
+                          category: category,
+                          title: 'Add Machine',
+                        });
+                      }}
+                    />
+                  </View>
                 </View>
 
                 {data.machine.value

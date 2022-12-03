@@ -41,6 +41,6 @@ export const categorySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const attributeAction = categorySlice.actions;
+export const categoryAction = categorySlice.actions;
 
 export default categorySlice.reducer;
