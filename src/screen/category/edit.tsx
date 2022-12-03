@@ -3,7 +3,7 @@ import {Box} from '@react-native-material/core';
 import React, {useMemo, useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
 import {RootState} from '../../store/rootReducer';
-import {useAppSelector} from '../../store/store';
+import {useAppDispatch, useAppSelector} from '../../store/store';
 import {useForm, Controller} from 'react-hook-form';
 import {IAttribute} from '../../helpers/types';
 import CButton from '../../component/button';
@@ -12,6 +12,7 @@ import CInput from '../../component/input';
 // import {Dropdown} from 'react-native-material-dropdown';
 // import RNPickerSelect from 'react-native-picker-select';
 import Modal from 'react-native-modal';
+import {attributeAction} from '../../store/category';
 
 interface IProps {
   route: any;
@@ -37,13 +38,24 @@ function EditCategory(props: IProps) {
   const {route, navigation} = props;
   const params = route.params;
   const data = useAppSelector((state: RootState) => state);
+  const dispatch = useAppDispatch();
   const [item, setItem] = useState<any>({});
   const [isModalVisible, setModalVisible] = useState(false);
   const [attributes, setAttributes] = useState<any>([]);
 
   const {handleSubmit, control} = useForm();
   const onSubmit = (payload: any) => {
-    console.log(payload, item);
+    let newItem = [...attributes];
+    for (const key in payload) {
+      newItem = newItem.map((i: any) => {
+        if (i.uid === key) {
+          i.name = payload[key];
+        }
+        return i;
+      });
+    }
+    console.log(item);
+    dispatch(attributeAction.add(newItem));
     navigation.goBack();
   };
 
@@ -64,6 +76,7 @@ function EditCategory(props: IProps) {
   }, [data.attribute.value, data.category.value, params?.action, params?.uid]);
 
   useMemo(() => {
+    navigation.setOptions({title: params.title});
     if (params?.action === 'add') {
       setAttributes([
         {
@@ -75,7 +88,7 @@ function EditCategory(props: IProps) {
         },
       ]);
     }
-  }, [params?.action]);
+  }, [navigation, params?.action, params.title]);
 
   const addNewField = (type: string) => {
     setAttributes([
@@ -119,7 +132,7 @@ function EditCategory(props: IProps) {
                   onDelete={(inputValue: any) => removeField(inputValue)}
                 />
               )}
-              name="email"
+              name={i.uid}
               rules={{required: true}}
             />
           ))}

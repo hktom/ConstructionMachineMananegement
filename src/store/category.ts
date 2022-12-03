@@ -18,7 +18,7 @@ export const categorySlice = createSlice({
     },
     setTitle: (state, action) => {
       state.value = state.value.map(item => {
-        if (item.id === action.payload.id) {
+        if (item.uid === action.payload.id) {
           return {...item, titleAttribute: action.payload.titleAttribute};
         }
         return item;
@@ -26,7 +26,7 @@ export const categorySlice = createSlice({
     },
     update: (state, action) => {
       state.value = state.value.map(item => {
-        if (item.id === action.payload.id) {
+        if (item.uid === action.payload.uid) {
           return action.payload;
         }
         return item;
@@ -34,7 +34,7 @@ export const categorySlice = createSlice({
     },
     remove: (state, action) => {
       state.value = state.value.filter(
-        (machine: ICategory) => machine.id !== action.payload,
+        (machine: ICategory) => machine.uid !== action.payload,
       );
     },
   },
