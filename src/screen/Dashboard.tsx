@@ -85,8 +85,11 @@ function Dashboard({navigation}: any) {
                   <ListItem
                     title={machine.uid}
                     onPress={() => {
-                      navigation.navigate('EditScreen', {
+                      navigation.navigate('EditMachine', {
                         title: 'Edit Machine',
+                        action: 'edit',
+                        machine: machine,
+                        category: category,
                       });
                     }}
                   />

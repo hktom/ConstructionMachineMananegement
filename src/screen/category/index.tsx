@@ -41,7 +41,9 @@ function ManageCategory(props: IProps) {
             onPress={() => {
               navigation.navigate('EditScreen', {
                 category: item,
-                title: `Category : ${item.name}`,
+                action: 'edit',
+                type: 'category',
+                title: 'Manage Category',
                 labelButton: 'Edit Category',
               });
             }}

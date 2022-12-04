@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Box} from '@react-native-material/core';
 import React, {useMemo, useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
@@ -192,6 +193,20 @@ function EditCategory(props: IProps) {
             />
           </Box>
         </View>
+
+        {params?.category && (
+          <View style={{padding: 10, marginTop: 20}}>
+            <CButton
+              title={'Remove category'}
+              variant="outlined"
+              color={'red'}
+              onPress={() => {
+                dispatch(categoryAction.remove(params?.category?.uid));
+                navigation.goBack();
+              }}
+            />
+          </View>
+        )}
 
         <Modal
           isVisible={isModalVisible}
