@@ -39,9 +39,10 @@ function ManageCategory(props: IProps) {
             key={item.uid}
             title={item.name}
             onPress={() => {
-              navigation.navigate('MachineScreen', {
+              navigation.navigate('EditScreen', {
                 category: item,
                 title: `Category : ${item.name}`,
+                labelButton: 'Edit Category',
               });
             }}
           />

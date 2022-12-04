@@ -69,21 +69,21 @@ function EditCategory(props: IProps) {
   };
 
   useMemo(() => {
-    if (params?.action === 'edit' && params?.uid) {
-      let payload = data.category.value.find((i: any) => i.uid === params?.uid);
-      setCategory(payload);
-      if (payload) {
+    if (params?.action === 'edit' && params?.category) {
+      // let payload = data.category.value.find((i: any) => i.uid === params?.uid);
+      setCategory(params.category);
+      if (params.category) {
         let payloadAttributes: any[] = [];
         data.attribute.value.forEach((i: any) => {
-          if (i.belongTo === payload?.uid) {
+          if (i.belongTo === params.category.uid) {
             payloadAttributes.push(i);
           }
         });
         setAttributes(payloadAttributes);
       }
-      setCategory(payload);
+      // setCategory(payload);
     }
-  }, [data.attribute.value, data.category.value, params?.action, params?.uid]);
+  }, [data.attribute.value, params?.action, params.category]);
 
   useMemo(() => {
     navigation.setOptions({title: params.title});
