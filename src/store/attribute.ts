@@ -14,7 +14,7 @@ export const attributeSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      state.value = [...state.value, action.payload];
+      state.value = [...state.value, ...action.payload];
     },
     update: (state, action) => {
       state.value = state.value.map(item => {

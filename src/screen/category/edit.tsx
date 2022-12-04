@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import {Box} from '@react-native-material/core';
 import React, {useMemo, useState} from 'react';
 import {ScrollView, Text, View} from 'react-native';
@@ -9,8 +8,7 @@ import {IAttribute} from '../../helpers/types';
 import CButton from '../../component/button';
 import uuid from 'react-native-uuid';
 import CInput from '../../component/input';
-// import {Dropdown} from 'react-native-material-dropdown';
-// import RNPickerSelect from 'react-native-picker-select';
+
 import Modal from 'react-native-modal';
 import {categoryAction} from '../../store/category';
 import {attributeAction} from '../../store/attribute';
@@ -40,7 +38,7 @@ function EditCategory(props: IProps) {
   const params = route.params;
   const data = useAppSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
-  // const [item, setItem] = useState<any>({});
+
   const [isModalVisible, setModalVisible] = useState(false);
   const [attributes, setAttributes] = useState<any>([]);
   const [category, setCategory] = useState<any>({});
@@ -53,6 +51,7 @@ function EditCategory(props: IProps) {
         if (i.uid === key) {
           i.name = payload[key];
         }
+        i.belongTo = category.uid;
         return i;
       });
     }
@@ -69,19 +68,20 @@ function EditCategory(props: IProps) {
   };
 
   useMemo(() => {
+    console.log('params?.categor', params?.category);
     if (params?.action === 'edit' && params?.category) {
-      // let payload = data.category.value.find((i: any) => i.uid === params?.uid);
-      setCategory(params.category);
-      if (params.category) {
-        let payloadAttributes: any[] = [];
-        data.attribute.value.forEach((i: any) => {
-          if (i.belongTo === params.category.uid) {
-            payloadAttributes.push(i);
-          }
-        });
-        setAttributes(payloadAttributes);
-      }
-      // setCategory(payload);
+      setCategory({
+        ...params?.category,
+        value: params?.category?.name,
+      });
+      let payloadAttributes: any[] = [];
+      data.attribute.value.forEach((i: any) => {
+        if (i.belongTo === params.category.uid) {
+          payloadAttributes.push(i);
+        }
+      });
+
+      setAttributes(payloadAttributes);
     }
   }, [data.attribute.value, params?.action, params.category]);
 
@@ -95,18 +95,6 @@ function EditCategory(props: IProps) {
         type: 'text',
         required: 'true',
       });
-      // setItem({
-      //   uid: uuid.v4(),
-      // });
-      // setAttributes([
-      //   {
-      //     uid: uuid.v4(),
-      //     name: 'Name',
-      //     value: '',
-      //     type: 'text',
-      //     required: 'true',
-      //   },
-      // ]);
     }
   }, [navigation, params?.action, params.title]);
 
@@ -136,28 +124,32 @@ function EditCategory(props: IProps) {
     <ScrollView>
       <Box pr={10} pl={10} pt={20}>
         <View>
-          <Controller
-            control={control}
-            render={({field: {onChange, onBlur, value}}) => (
-              <CInput
-                item={category}
-                label="Name"
-                value={value}
-                onBlur={onBlur}
-                variant="outlined"
-                showType={false}
-                canBeRemoved={false}
-                onChangeText={(inputValue: any) => onChange(inputValue)}
-                onDelete={(inputValue: any) => console.log(inputValue)}
-              />
-            )}
-            name={category?.uid}
-            rules={{required: true}}
-          />
+          {category && (
+            <Controller
+              control={control}
+              defaultValue={category?.name}
+              render={({field: {onChange, onBlur, value}}) => (
+                <CInput
+                  item={category}
+                  label="Name"
+                  value={value}
+                  onBlur={onBlur}
+                  variant="outlined"
+                  showType={false}
+                  canBeRemoved={false}
+                  onChangeText={(inputValue: any) => onChange(inputValue)}
+                  onDelete={(inputValue: any) => console.log(inputValue)}
+                />
+              )}
+              name={category?.uid}
+              rules={{required: true}}
+            />
+          )}
           {attributes.map((i: IAttribute) => (
             <Controller
               key={i.uid}
               control={control}
+              defaultValue={i?.name}
               render={({field: {onChange, onBlur, value}}) => (
                 <CInput
                   item={i}

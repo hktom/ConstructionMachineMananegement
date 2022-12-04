@@ -32,68 +32,69 @@ function Dashboard({navigation}: any) {
       />
     </View>
   );
+  if (data.category.value.length === 0) {
+    return (
+      <View
+        style={{
+          display: 'flex',
+          // alignItems: 'start',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          flex: 1,
+        }}>
+        {emptyMachineType()}
+      </View>
+    );
+  }
   return (
-    <View
-      style={{
-        display: 'flex',
-        // alignItems: 'start',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        flex: 1,
-      }}>
-      {data.category.value.length === 0 ? (
-        emptyMachineType()
-      ) : (
-        <ScrollView>
-          <View>
-            {data.category.value.map((category: any) => (
-              <View key={category.uid}>
-                <View
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    flexDirection: 'row',
-                    flex: 1,
-                    paddingTop: 10,
-                    paddingLeft: 10,
-                    paddingRight: 10,
-                  }}>
-                  <View>
-                    <Text style={{fontSize: 20}}>{category.name}</Text>
-                  </View>
-                  <View>
-                    <CButton
-                      title={'Add item'}
-                      onPress={() => {
-                        navigation.navigate('EditMachine', {
-                          category: category,
-                          title: 'Add Machine',
-                        });
-                      }}
-                    />
-                  </View>
-                </View>
-
-                {data.machine.value
-                  .filter((machine: any) => machine.category === category.uid)
-                  .map((machine: any) => (
-                    <View key={machine.uid}>
-                      <ListItem
-                        title={machine.name}
-                        onPress={() => {
-                          navigation.navigate('EditScreen', {
-                            title: 'Edit Machine',
-                          });
-                        }}
-                      />
-                    </View>
-                  ))}
+    <ScrollView>
+      <View>
+        {data.category.value.map((category: any) => (
+          <View key={category.uid}>
+            <View
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                flex: 1,
+                paddingTop: 10,
+                paddingLeft: 10,
+                paddingRight: 10,
+              }}>
+              <View>
+                <Text style={{fontSize: 20}}>{category.name}</Text>
               </View>
-            ))}
+              <View>
+                <CButton
+                  title={'Add item'}
+                  onPress={() => {
+                    navigation.navigate('EditMachine', {
+                      category: category,
+                      title: 'Add Machine',
+                    });
+                  }}
+                />
+              </View>
+            </View>
+
+            {data.machine.value
+              .filter((machine: any) => machine.category === category.uid)
+              .map((machine: any) => (
+                <View key={machine.uid}>
+                  <ListItem
+                    title={machine.name}
+                    onPress={() => {
+                      navigation.navigate('EditScreen', {
+                        title: 'Edit Machine',
+                      });
+                    }}
+                  />
+                </View>
+              ))}
           </View>
-        </ScrollView>
-      )}
-    </View>
+        ))}
+      </View>
+    </ScrollView>
   );
 }
 
