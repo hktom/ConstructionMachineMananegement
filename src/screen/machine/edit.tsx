@@ -1,7 +1,6 @@
-/* eslint-disable react-native/no-inline-styles */
 import {Box} from '@react-native-material/core';
 import React, {useMemo, useState} from 'react';
-import {ScrollView, Text, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import {RootState} from '../../store/rootReducer';
 import {useAppDispatch, useAppSelector} from '../../store/store';
 import {useForm, Controller} from 'react-hook-form';
@@ -9,10 +8,7 @@ import {IAttribute} from '../../helpers/types';
 import CButton from '../../component/button';
 import uuid from 'react-native-uuid';
 import CInput from '../../component/input';
-// import {Dropdown} from 'react-native-material-dropdown';
-// import RNPickerSelect from 'react-native-picker-select';
-import Modal from 'react-native-modal';
-import {attributeAction} from '../../store/category';
+
 import {machineAction} from '../../store/machine';
 
 interface IProps {
@@ -20,28 +16,12 @@ interface IProps {
   navigation: any;
 }
 
-// const optionsField = [
-//   {
-//     value: 'text',
-//   },
-//   {
-//     value: 'number',
-//   },
-//   {
-//     value: 'checkbox',
-//   },
-//   {
-//     value: 'date',
-//   },
-// ];
-
 function EditMachine(props: IProps) {
   const {route, navigation} = props;
   const params = route.params;
   const data = useAppSelector((state: RootState) => state);
   const dispatch = useAppDispatch();
-  //   const [item, setItem] = useState<any>({});
-  //   const [isModalVisible, setModalVisible] = useState(false);
+
   const [attributes, setAttributes] = useState<any>([]);
 
   const {handleSubmit, control} = useForm();
