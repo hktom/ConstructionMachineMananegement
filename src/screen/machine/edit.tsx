@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {Box} from '@react-native-material/core';
 import React, {useMemo, useState} from 'react';
 import {ScrollView, View} from 'react-native';
@@ -116,9 +117,23 @@ function EditMachine(props: IProps) {
 
         <View>
           <Box>
-            <CButton title={'Enregister'} onPress={handleSubmit(onSubmit)} />
+            <CButton title={'Save'} onPress={handleSubmit(onSubmit)} />
           </Box>
         </View>
+
+        {params?.machine && (
+          <View style={{padding: 10, marginTop: 20}}>
+            <CButton
+              title={'Remove Item'}
+              variant="outlined"
+              color={'red'}
+              onPress={() => {
+                dispatch(machineAction.remove(params?.machine?.uid));
+                navigation.goBack();
+              }}
+            />
+          </View>
+        )}
       </Box>
     </ScrollView>
   );
