@@ -56,15 +56,29 @@ function EditCategory(props: IProps) {
       });
     }
 
-    dispatch(
-      categoryAction.add({
-        ...category,
-        name: payload[category.uid],
-      }),
-    );
+    if (params?.action === 'edit') {
+      dispatch(
+        categoryAction.update({
+          ...category,
+          name: payload[category.uid],
+        }),
+      );
+      newItem.forEach((i: any) => {
+        dispatch(attributeAction.remove(i));
+      });
 
-    dispatch(attributeAction.add(newItem));
-    navigation.goBack();
+      dispatch(attributeAction.add(newItem));
+      navigation.goBack();
+    } else {
+      dispatch(
+        categoryAction.add({
+          ...category,
+          name: payload[category.uid],
+        }),
+      );
+      dispatch(attributeAction.add(newItem));
+      navigation.goBack();
+    }
   };
 
   useMemo(() => {
@@ -127,7 +141,7 @@ function EditCategory(props: IProps) {
           {category && (
             <Controller
               control={control}
-              defaultValue={category?.name}
+              defaultValue={category?.name !== 'Name' ? category?.name : ''}
               render={({field: {onChange, onBlur, value}}) => (
                 <CInput
                   item={category}
@@ -149,7 +163,7 @@ function EditCategory(props: IProps) {
             <Controller
               key={i.uid}
               control={control}
-              defaultValue={i?.name}
+              defaultValue={i?.name !== 'Name' ? i?.name : ''}
               render={({field: {onChange, onBlur, value}}) => (
                 <CInput
                   item={i}

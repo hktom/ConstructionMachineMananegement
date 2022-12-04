@@ -18,7 +18,7 @@ export const attributeSlice = createSlice({
     },
     update: (state, action) => {
       state.value = state.value.map(item => {
-        if (item.name === action.payload.name) {
+        if (item.uid === action.payload.uid) {
           return action.payload;
         }
         return item;
@@ -26,7 +26,7 @@ export const attributeSlice = createSlice({
     },
     remove: (state, action) => {
       state.value = state.value.filter(
-        (attribute: IAttribute) => attribute.name !== action.payload,
+        (attribute: IAttribute) => attribute.uid !== action.payload.uid,
       );
     },
   },
