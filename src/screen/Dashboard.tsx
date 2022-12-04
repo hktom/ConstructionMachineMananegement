@@ -70,6 +70,7 @@ function Dashboard({navigation}: any) {
                   onPress={() => {
                     navigation.navigate('EditMachine', {
                       category: category,
+                      action: 'add',
                       title: 'Add Machine',
                     });
                   }}
@@ -82,7 +83,7 @@ function Dashboard({navigation}: any) {
               .map((machine: any) => (
                 <View key={machine.uid}>
                   <ListItem
-                    title={machine.name}
+                    title={machine.uid}
                     onPress={() => {
                       navigation.navigate('EditScreen', {
                         title: 'Edit Machine',

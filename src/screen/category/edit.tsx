@@ -82,7 +82,6 @@ function EditCategory(props: IProps) {
   };
 
   useMemo(() => {
-    console.log('params?.categor', params?.category);
     if (params?.action === 'edit' && params?.category) {
       setCategory({
         ...params?.category,

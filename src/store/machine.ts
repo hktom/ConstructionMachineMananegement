@@ -18,7 +18,7 @@ export const machineSlice = createSlice({
     },
     setTitle: (state, action) => {
       state.value = state.value.map(item => {
-        if (item.id === action.payload.id) {
+        if (item.uid === action.payload.uid) {
           return {...item, titleAttribute: action.payload.titleAttribute};
         }
         return item;
@@ -26,7 +26,7 @@ export const machineSlice = createSlice({
     },
     update: (state, action) => {
       state.value = state.value.map(item => {
-        if (item.id === action.payload.id) {
+        if (item.uid === action.payload.uid) {
           return action.payload;
         }
         return item;
@@ -34,13 +34,13 @@ export const machineSlice = createSlice({
     },
     remove: (state, action) => {
       state.value = state.value.filter(
-        (machine: IMachine) => machine.id !== action.payload,
+        (machine: IMachine) => machine.uid !== action.payload,
       );
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const attributeAction = machineSlice.actions;
+export const machineAction = machineSlice.actions;
 
 export default machineSlice.reducer;

@@ -13,6 +13,7 @@ import CInput from '../../component/input';
 // import RNPickerSelect from 'react-native-picker-select';
 import Modal from 'react-native-modal';
 import {attributeAction} from '../../store/category';
+import {machineAction} from '../../store/machine';
 
 interface IProps {
   route: any;
@@ -45,38 +46,63 @@ function EditMachine(props: IProps) {
 
   const {handleSubmit, control} = useForm();
   const onSubmit = (payload: any) => {
-    console.log(payload);
+    let newItem = [...attributes];
+    for (const key in payload) {
+      newItem = newItem.map((i: any) => {
+        if (i.uid === key) {
+          i.value = payload[key];
+        }
+        return {uid: i.uid, value: i.value};
+      });
+    }
+
+    if (params?.action === 'add') {
+      dispatch(
+        machineAction.add({
+          uid: uuid.v4(),
+          category: params?.category.uid,
+          attributes: newItem,
+        }),
+      );
+    } else {
+      dispatch(
+        machineAction.update({
+          uid: params?.machine.uid,
+          attributes: newItem,
+        }),
+      );
+    }
+    navigation.goBack();
   };
 
   useMemo(() => {
-    if (attributes.length === 0) {
-      let categoryAttributes = [
-        ...data.attribute.value.filter(i => i.belongTo === params.category.uid),
-      ];
+    if (params?.category) {
+      let payloadAttributes: any[] = [];
+      data.attribute.value.forEach((i: any) => {
+        if (i.belongTo === params.category.uid) {
+          payloadAttributes.push(i);
+        }
+      });
 
-      let machine = data.machine.value.find(
-        (i: any) => i.uid === params.machine.uid,
-      );
+      console.log('payloadAttributes', payloadAttributes);
 
-      let machineAttributes = [...categoryAttributes];
-      for (const key in machine?.attributes) {
+      setAttributes(payloadAttributes);
+    }
+  }, [data.attribute.value, params.category]);
+
+  useMemo(() => {
+    if (params.action === 'edit' && params.machine) {
+      let machineAttributes = [...attributes];
+      for (const key in params.machine.attributes) {
         machineAttributes = machineAttributes.map((i: any) => {
           if (i.uid === key) {
-            i.value = machine?.attributes[key];
+            i.value = params.machine.attributes[key];
           }
           return i;
         });
       }
-
-      setAttributes(machineAttributes);
     }
-  }, [
-    attributes.length,
-    data.attribute.value,
-    data.machine.value,
-    params.category.uid,
-    params.machine.uid,
-  ]);
+  }, [attributes, params.action, params.machine]);
 
   return (
     <ScrollView>
@@ -86,9 +112,11 @@ function EditMachine(props: IProps) {
             <Controller
               key={i.uid}
               control={control}
+              defaultValue={i?.value}
               render={({field: {onChange, onBlur, value}}) => (
                 <CInput
                   item={i}
+                  label={i.name}
                   value={value}
                   onBlur={onBlur}
                   variant="outlined"

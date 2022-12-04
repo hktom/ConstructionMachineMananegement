@@ -9,6 +9,7 @@ import {Provider} from 'react-redux';
 import EditCategory from './src/screen/category/edit';
 import ManageCategory from './src/screen/category';
 import CustomDrawerContent from './src/customDrawerContent';
+import EditMachine from './src/screen/machine/edit';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -35,6 +36,7 @@ function App() {
           }}
         />
         <Stack.Screen name="EditScreen" component={EditCategory} />
+        <Stack.Screen name="EditMachine" component={EditMachine} />
       </Stack.Navigator>
     </NavigationContainer>
   );
