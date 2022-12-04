@@ -4,12 +4,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Dashboard from './src/screen/Dashboard';
-import {store} from './src/store/store';
+import {persistor, store} from './src/store/store';
 import {Provider} from 'react-redux';
 import EditCategory from './src/screen/category/edit';
 import ManageCategory from './src/screen/category';
 import CustomDrawerContent from './src/customDrawerContent';
 import EditMachine from './src/screen/machine/edit';
+import {PersistGate} from 'redux-persist/integration/react';
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -45,7 +46,17 @@ function App() {
 export default () => {
   return (
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   );
 };
+
+// export default () => {
+//   return (
+//     <Provider store={store}>
+//       <App />
+//     </Provider>
+//   );
+// };
